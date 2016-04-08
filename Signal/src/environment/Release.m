@@ -45,10 +45,16 @@ static unsigned char DH3K_PRIME[] = {
     return [Environment
                    environmentWithLogging:logging
                             andErrorNoter:errorNoter
-                            andServerPort:31337
-                  andMasterServerHostName:@"master.whispersystems.org"
+                            //[AC 21/03/2016] CAMBIATA LA PORTA DELLA CHIAMATA
+                            andServerPort:8080
+                            //andServerPort:31337
+                //[AC 21/03/2016] AGGIUNTA LA CHIAMATA AL NOSTRO SERVER
+            andMasterServerHostName:@"signal.sinesy.it"
+            //andMasterServerHostName:@"master.whispersystems.org"
                       andDefaultRelayName:@"relay"
-             andRelayServerHostNameSuffix:@"whispersystems.org"
+            //[AC 21/03/2016] AGGIUNTO IL NOSTRO SUFFISSO DELL'HOST
+            andRelayServerHostNameSuffix:@"sinesy.it"
+            //andRelayServerHostNameSuffix:@"whispersystems.org"
                            andCertificate:[Certificate certificateFromResourcePath:@"redphone" ofType:@"cer"]
         andSupportedKeyAgreementProtocols:[self supportedKeyAgreementProtocols]
                           andPhoneManager:[PhoneManager phoneManagerWithErrorHandler:errorNoter]
@@ -95,9 +101,13 @@ static unsigned char DH3K_PRIME[] = {
                                  andErrorNoter:^(id error, id relatedInfo, bool causedTermination) {
                                  }
                                  andServerPort:31337
-                       andMasterServerHostName:@"master.whispersystems.org"
+                        //[AC 21/03/2016]
+                       andMasterServerHostName:@"signal.sinesy.it"
+                        //andMasterServerHostName:@"master.whispersystems.org"
                            andDefaultRelayName:@"relay"
-                  andRelayServerHostNameSuffix:@"whispersystems.org"
+                    //[AC 21/03/2016]
+                  andRelayServerHostNameSuffix:@"sinesy.it"
+                    //andRelayServerHostNameSuffix:@"whispersystems.org"
                                 andCertificate:[Certificate certificateFromResourcePath:@"redphone" ofType:@"cer"]
              andSupportedKeyAgreementProtocols:keyAgreementProtocols
                                andPhoneManager:nil

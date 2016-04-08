@@ -158,22 +158,30 @@
       pushTokens = tokens;
       return [self textSecureRegistrationFuture:pushTokens];
     }];
-
-    TOCFuture *redphoneRegistrationFuture = [tsRegistrationFuture then:^id(id value) {
-      return [[self getRPRegistrationToken] then:^(NSString *registrationFuture) {
-        return [self redphoneRegistrationWithTSToken:registrationFuture
-                                           pushToken:pushTokens[0]
-                                           voipToken:([pushTokens count] == 2) ? pushTokens.lastObject : nil];
-      }];
+    //[AC 21/03/2016] Aggiunte le chiamate success e failure sotto
+    [tsRegistrationFuture thenDo:^(id value) {
+        success();
+    }];
+    [tsRegistrationFuture catchDo:^(NSError *error) {
+        failure(error);
     }];
 
-    [redphoneRegistrationFuture thenDo:^(id value) {
-      success();
-    }];
-
-    [redphoneRegistrationFuture catchDo:^(NSError *error) {
-      failure(error);
-    }];
+    //[AC 21/03/2016] COMMENTATA LA PARTE DI REGISTRAZIONE A REDPHONE, NON SERVE AL MOMENTO E NON PERMETTE DI PROCEDERE CON L'ESECUZIONE
+//    TOCFuture *redphoneRegistrationFuture = [tsRegistrationFuture then:^id(id value) {
+//      return [[self getRPRegistrationToken] then:^(NSString *registrationFuture) {
+//        return [self redphoneRegistrationWithTSToken:registrationFuture
+//                                           pushToken:pushTokens[0]
+//                                           voipToken:([pushTokens count] == 2) ? pushTokens.lastObject : nil];
+//      }];
+//    }];
+//
+//    [redphoneRegistrationFuture thenDo:^(id value) {
+//      success();
+//    }];
+//
+//    [redphoneRegistrationFuture catchDo:^(NSError *error) {
+//      failure(error);
+//    }];
 }
 
 

@@ -52,6 +52,9 @@
     if (VOIPRegistration && [TSAccountManager isRegistered]) {
         [self nonBlockingPushRegistration];
     }
+    
+    //[AC 23/03/2016] CHIAMATA PER LA REGISTRAZIONE PUSH OGNI VOLTA CHE VIENE AVVIATA L'APP
+    [self nonBlockingPushRegistration];
 
     if ([self isVersion:previousVersion atLeast:@"2.0.0" andLessThan:@"2.1.70"] && [TSAccountManager isRegistered]) {
         [self clearVideoCache];

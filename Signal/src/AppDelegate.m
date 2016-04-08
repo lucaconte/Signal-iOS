@@ -16,6 +16,9 @@
 #import "TextSecureKitEnv.h"
 #import "VersionMigrations.h"
 
+//[AC 23/03/2016]
+#import "NSData+ows_StripToken.h"
+
 static NSString *const kStoryboardName                  = @"Storyboard";
 static NSString *const kInitialViewControllerIdentifier = @"UserInitialViewController";
 static NSString *const kURLSchemeSGNLKey                = @"sgnl";
@@ -109,6 +112,10 @@ static NSString *const kURLHostVerifyPrefix             = @"verify";
     }
 
     [AppStoreRating setupRatingLibrary];
+    
+    //[AC 22/03/2016]
+    // Register for remote notifications.
+    //[[UIApplication sharedApplication] registerForRemoteNotifications];
 
     return YES;
 }
@@ -121,7 +128,11 @@ static NSString *const kURLHostVerifyPrefix             = @"verify";
 
 - (void)application:(UIApplication *)application
     didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    
     [PushManager.sharedManager.pushNotificationFutureSource trySetResult:deviceToken];
+    
+    //[AC 23/03/2016]
+    [TSAccountManager registerForPushNotifications:[deviceToken ows_tripToken] voipToken:nil success:^{NSLog(@"SUCCESS");} failure:^(NSError *blockerror){NSLog(@"ERROR");}];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {

@@ -35,7 +35,8 @@
     if (self) {
         NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
         HostNameEndPoint *endpoint               = Environment.getCurrent.masterServerSecureEndPoint.hostNameEndPoint;
-        NSURL *endPointURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@:%d", endpoint.hostname, 443]];
+        //[AC 22/03/2016] ho cambiato la porta da 443 a 8080 
+        NSURL *endPointURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@:%d", endpoint.hostname, 8080]];
         self.operationManager =
             [[AFHTTPSessionManager alloc] initWithBaseURL:endPointURL sessionConfiguration:sessionConfig];
         self.operationManager.securityPolicy = [AFSecurityOWSPolicy OWS_PinningPolicy];
